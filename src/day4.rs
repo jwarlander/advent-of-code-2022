@@ -19,6 +19,23 @@ pub fn part1(input: &str) -> i32 {
     n
 }
 
+#[aoc(day4, part2)]
+pub fn part2(input: &str) -> i32 {
+    let mut n = 0;
+
+    for line in input.lines() {
+        let [ref first, ref second] = line.split(',')
+            .map(parse_range)
+            .collect::<Vec<_>>()[..] else { panic!("Invalid input, must have even pairs of ranges in each line: {}", line)};
+
+        if first.intersection(second).count() > 0 {
+            n += 1;
+        }
+    }
+
+    n
+}
+
 fn parse_range(input: &str) -> HashSet<i32> {
     let [start, stop] = input
         .split('-')
